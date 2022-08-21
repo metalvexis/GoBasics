@@ -5,7 +5,8 @@ import (
 	"os"
 	"strconv"
 
-	m "github.com/metalvexis/gobasics/lib/fizzbuzz"
+	echo "github.com/metalvexis/gobasics/lib/echo"
+	basics "github.com/metalvexis/gobasics/lib/fizzbuzz"
 )
 
 /*
@@ -18,5 +19,6 @@ import (
 
 func main() {
 	var input, _ = strconv.Atoi(os.Args[1])
-	fmt.Println(m.FizzBuzz(input))
+	fmt.Println(basics.FizzBuzz(input))
+	fmt.Println(echo.Echo(os.Args[1]))
 }
