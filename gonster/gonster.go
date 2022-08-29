@@ -35,7 +35,7 @@ func (pgg ProtoGonsterGen) Generate(seed int) (Gonster, []byte) {
 	baseTorso := k8Rand.IntnRange(0, 50)
 	torso, _ := basics.RoundBy(baseTorso, 5)
 
-	arm := k8Rand.IntnRange(3, 10)
+	arm := k8Rand.IntnRange(10, 20)
 
 	baseLeg := k8Rand.IntnRange(0, 50)
 	leg, _ := basics.RoundBy(baseLeg, 5)
