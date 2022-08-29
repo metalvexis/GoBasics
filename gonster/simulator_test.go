@@ -59,4 +59,6 @@ func TestSimulator(t *testing.T) {
 
 	}
 
+	fmt.Println(sim)
+
 }

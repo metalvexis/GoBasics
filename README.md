@@ -27,7 +27,7 @@ A generated Gonster will be serialized as JSON:
 2. Torso
     - defines the reduction of damage received from offensive action. (0-50 rounded to nearest 5)
 3. Arm
-    - defines the amount of damage the offensive action of the Gonster (3 - 10)
+    - defines the amount of damage the offensive action of the Gonster (10 - 15)
 4. Leg
     - defines the chance of dodging an offensive action from opposing Gonster. (0-50 rounded to nearest 5)
 
