@@ -33,7 +33,26 @@ A generated Gonster will be serialized as JSON:
 
 **Gonster Battle Simulator**
 
-Given 2 Gonster entering a simulation, the simulator defines the actions a Gonster can do for every turn. The simulator is composed of multiple rounds of battle, wherein, a round is composed of 2 turns. On the first turn of the round, the first Gonster is allowed to be in the offensive the second Gonster is in the defensive. On the second, Gonster trade places.  The simulator will run an indefinite amount of rounds until a Gonster is left with zero health. The Gonster with remaining positive health is the victor of the simulation. The simulator will log every action and result of each turn.
+Given 2 Gonster entering a simulation, the simulator defines the actions a Gonster can do for every turn. The simulator is composed of 100 rounds of battle. Every round, both Gonster attacks at the same time. The simulator will run until a Gonster is left with zero health or the 100 rounds are reached. The Gonster with highest remaining positive health is the victor of the simulation. The simulator will log every action and result of each round and battle.
+
+In every round:
+
+- An attack will succeed depending on the “Head” attribute of the attacker and the “Leg” attribute of the defender.
+- A random number will be generated from 0 to 99. The attack succeeds if the generated number is less than or equal to the probability of success
+- The probability of success of an attack is defined by:
+    
+    ```jsx
+    10 + (attacker.Head - defender.Leg)
+    ```
+    
+- The defending Gonster will receive damage defined by this formula rounded down to the nearest whole number
+    
+    ```jsx
+    attacker.Arm - (attacker.Arm * (defender.Torso / 100))
+    ```
+    
+- The minimum total received damage is 0
+- The attacking Gonster’s computed Total Damage is deducted from the health of the defending Gonster.
 
  
 
