@@ -23,7 +23,7 @@ func TestGonster(t *testing.T) {
 	t.Log("Testing Gonster Generator")
 	newGonsterGen := ProtoGonsterGen{}
 	for _, test := range seedList {
-		result, jsonGonster := newGonsterGen.Generate(test.seed)
+		result, jsonGonster := newGonsterGen.Generate(int(test.seed))
 		unmarshalled := Gonster{}
 		json.Unmarshal(jsonGonster, &unmarshalled)
 		prettified, _ := json.MarshalIndent(unmarshalled, "", "\t")

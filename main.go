@@ -5,8 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	echo "github.com/metalvexis/gobasics/lib/echo"
-	basics "github.com/metalvexis/gobasics/lib/fizzbuzz"
+	basics "github.com/metalvexis/gobasics/basics"
 
 	gonster "github.com/metalvexis/gobasics/gonster"
 )
@@ -14,10 +13,12 @@ import (
 func main() {
 	var input, _ = strconv.Atoi(os.Args[1])
 	fmt.Println(basics.FizzBuzz(input))
-	fmt.Println(echo.Echo(os.Args[1]))
+	fmt.Println(basics.Echo(os.Args[1]))
 
 	gonsterGenerator := gonster.ProtoGonsterGen{}
 
 	gonsterGenerator.Generate(42)
+
+	basics.RoundBy(6, 5)
 
 }
