@@ -2,12 +2,15 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 
 	basics "github.com/metalvexis/gobasics/basics"
 
 	gonster "github.com/metalvexis/gobasics/gonster"
+
+	example "golang.org/x/example/stringutil"
 )
 
 func main() {
@@ -20,5 +23,7 @@ func main() {
 	gonsterGenerator.Generate(42)
 
 	basics.RoundBy(6, 5)
+
+	log.Println(example.Reverse("Hello"))
 
 }
