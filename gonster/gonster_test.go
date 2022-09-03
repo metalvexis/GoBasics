@@ -2,7 +2,7 @@ package gonster
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"testing"
 )
 
@@ -27,7 +27,7 @@ func TestGonster(t *testing.T) {
 		unmarshalled := Gonster{}
 		json.Unmarshal(jsonGonster, &unmarshalled)
 		prettified, _ := json.MarshalIndent(unmarshalled, "", "\t")
-		fmt.Println(string(prettified))
+		log.Println(string(prettified))
 
 		if unmarshalled.Health == 0 {
 			t.Errorf("Output %q not equal to expected %t", result, test.expected)

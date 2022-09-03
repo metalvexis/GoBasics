@@ -2,7 +2,7 @@ package gonster
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"math/rand"
 
 	k8Rand "k8s.io/apimachinery/pkg/util/rand"
@@ -25,6 +25,7 @@ type GonsterGenerator interface {
 type ProtoGonsterGen struct{}
 
 func (pgg ProtoGonsterGen) Generate(seed int) (Gonster, []byte) {
+	k8Rand.Seed(int64(seed))
 	rand.Seed(int64(seed))
 
 	health := 50
@@ -45,7 +46,7 @@ func (pgg ProtoGonsterGen) Generate(seed int) (Gonster, []byte) {
 	gonsterJson, err := json.Marshal(newGonster)
 
 	if err != nil {
-		fmt.Println("Cannot serialize Gonster", err)
+		log.Println("Cannot serialize Gonster", err)
 	}
 
 	return newGonster, gonsterJson
