@@ -24,33 +24,10 @@ func TestSimulator(t *testing.T) {
 	sim := ProtoSimulator{}
 
 	for _, test := range simulatorList {
-		simResult, _ := sim.Start(test.gonster1, test.gonster2, 10)
+		simResult, _ := sim.Start(test.gonster1, test.gonster2, 50)
 
 		for round, actionLog := range simResult.ActionLog {
-			var gonster1AtkMsg string
-			if actionLog[0].IsAttackSuccess {
-				gonster1AtkMsg = "landed"
-			} else {
-				gonster1AtkMsg = "missed"
-			}
-			gonster1Log := fmt.Sprintf("(%d%%) %d damage %s and prevented %d damage",
-				actionLog[0].AttackProbability,
-				actionLog[0].TotalDamage,
-				gonster1AtkMsg,
-				actionLog[0].DamagePrevented)
-
-			var gonster2AtkMsg string
-			if actionLog[1].IsAttackSuccess {
-				gonster2AtkMsg = "landed"
-			} else {
-				gonster2AtkMsg = "missed"
-			}
-			gonster2Log := fmt.Sprintf("(%d%%) %d damage %s and prevented %d damage",
-				actionLog[1].AttackProbability,
-				actionLog[1].TotalDamage,
-				gonster2AtkMsg,
-				actionLog[1].DamagePrevented)
-			fmt.Printf("Round %d ======\n%s\n%s\n\n", round+1, gonster1Log, gonster2Log)
+			fmt.Printf("Round %d ======\n%s\n%s\n\n", round+1, createLog(&actionLog[0]), createLog(&actionLog[1]))
 
 			fmt.Printf("Gonster1: %d HP\nGonster2: %d HP\n\n",
 				actionLog[0].RemainingHealth,
@@ -60,5 +37,20 @@ func TestSimulator(t *testing.T) {
 	}
 
 	fmt.Println(sim)
+}
 
+func createLog(actionLog *SimulatorActionLog) string {
+	var atkMsg string
+
+	if actionLog.IsAttackSuccess {
+		atkMsg = "landed"
+	} else {
+		atkMsg = "missed"
+	}
+
+	return fmt.Sprintf("(%d%%) %d damage %s and prevented %d damage",
+		actionLog.AttackProbability,
+		actionLog.TotalDamage,
+		atkMsg,
+		actionLog.DamagePrevented)
 }

@@ -35,8 +35,8 @@ func (sim *ProtoSimulator) Start(gonster1 Gonster, gonster2 Gonster, rounds int)
 	gonster2Health := gonster2.Health
 
 	for i := 0; i < rounds; i++ {
-		gonster1AtkLog := SimulateBattle(gonster1, gonster2, time.Now().UnixNano())
-		gonster2AtkLog := SimulateBattle(gonster2, gonster1, time.Now().UnixNano())
+		gonster1AtkLog := *SimulateBattle(gonster1, gonster2, time.Now().UnixNano())
+		gonster2AtkLog := *SimulateBattle(gonster2, gonster1, time.Now().UnixNano())
 
 		if gonster1AtkLog.IsAttackSuccess {
 			gonster2Health = gonster2Health - gonster1AtkLog.TotalDamage
@@ -54,28 +54,22 @@ func (sim *ProtoSimulator) Start(gonster1 Gonster, gonster2 Gonster, rounds int)
 		isGonster1Defeated := gonster1Health <= 0
 		isGonster2Defeated := gonster2Health <= 0
 
-		if isGonster1Defeated && isGonster2Defeated {
-			sim.BattleResult = GONSTER1_WIN
-			return *sim, nil
-		}
-
-		if isGonster1Defeated {
-			sim.BattleResult = GONSTER2_WIN
-			return *sim, nil
-		}
-
-		if isGonster2Defeated {
-			sim.BattleResult = GONSTER1_WIN
-			return *sim, nil
+		if isGonster1Defeated || isGonster2Defeated {
+			break
 		}
 	}
 
-	sim.BattleResult = DRAW
-
+	if gonster1Health > gonster2Health {
+		sim.BattleResult = GONSTER1_WIN
+	} else if gonster2Health > gonster1Health {
+		sim.BattleResult = GONSTER2_WIN
+	} else {
+		sim.BattleResult = DRAW
+	}
 	return *sim, nil
 }
 
-func SimulateBattle(attacker Gonster, defender Gonster, seed int64) SimulatorActionLog {
+func SimulateBattle(attacker Gonster, defender Gonster, seed int64) *SimulatorActionLog {
 	k8Rand.Seed(seed)
 	atkProb := 10 + (attacker.Head - defender.Leg)
 	diceRoll := k8Rand.IntnRange(0, 99)
@@ -83,7 +77,7 @@ func SimulateBattle(attacker Gonster, defender Gonster, seed int64) SimulatorAct
 	percentReduction := float32(defender.Torso) / 100
 	DamagePrevented := int(float32(attacker.Arm) * percentReduction)
 	atkTotalDamage := attacker.Arm - DamagePrevented
-	actLog := SimulatorActionLog{
+	actLog := &SimulatorActionLog{
 		DiceRoll:          diceRoll,
 		AttackProbability: atkProb,
 		IsAttackSuccess:   isAtkSuccess,
